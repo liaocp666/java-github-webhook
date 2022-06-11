@@ -1,6 +1,7 @@
 package cn.liaocp.project.handler;
 
 import cn.liaocp.project.App;
+import cn.liaocp.project.event.EventFactory;
 import cn.liaocp.project.event.PushEvent;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -48,9 +49,7 @@ public class WebHookHandler implements HttpHandler {
 
     private void handleEvent(HttpExchange exchange) throws IOException {
         String event = exchange.getRequestHeaders().getFirst(HEADER_EVENT_KEY);
-        if (event.equalsIgnoreCase("push")) {
-            new PushEvent().run();
-        }
+        new EventFactory().getEvent(event).run(exchange);
     }
 
     private Boolean verifySignature(HttpExchange exchange) throws Exception {
