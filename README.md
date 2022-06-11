@@ -1,6 +1,6 @@
 # java-webhook
 
-Java实现的Webhook服务端，用于监听Github平台发送的Webhook请求。
+Java实现的Webhook服务端，用于监听Github平台发送的Webhook请求，自动执行脚本命令，并记录日志文件
 
 ## 运行环境
 
