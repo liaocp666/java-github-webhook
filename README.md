@@ -16,8 +16,7 @@ JRE：== 8
 
 1. 下载最新的软件包：[Releases](https://github.com/liaocp66/java-webhook/releases)
 2. 执行解压命令`tar zxvf java-webhook.tar.gz`，并进入 webhook 目录
-3. 进入 `sh` 文件夹，根据不同事件，选择对应的脚本
-4. 返回上一层目录，执行 `run.sh` 脚本
+3. 执行 `run.sh` 脚本
 
 > 以上步骤的脚本都需要具有执行权限，使用命令赋权：`chmod +x <脚本名称>`
 
