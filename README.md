@@ -1,2 +1,51 @@
 # java-webhook
-Java实现的Webhook服务端
+
+Java实现的Webhook服务端，用于监听Github平台发送的Webhook请求。
+
+## 运行环境
+
+JRE：== 8
+
+## 部署步骤
+
+> 请先在系统中安装Java运行环境。
+>
+> 服务器终端执行 `java -version` ，在输出中看到有 `1.8`，则安装Java运行环境成功。
+
+### 开始部署
+
+1. 下载最新的软件包：[Releases](https://github.com/liaocp66/java-webhook/releases)
+2. 执行解压命令`tar zxvf java-webhook.tar.gz`，并进入 webhook 目录
+3. 进入 `sh` 文件夹，根据不同事件，选择对应的脚本
+4. 返回上一层目录，执行 `run.sh` 脚本
+
+> 以上步骤的脚本都需要具有执行权限，使用命令赋权：`chmod +x <脚本名称>`
+
+此时服务端将监听：端口：`4567`，地址：`/webhook`
+
+### 配置地址端口
+
+找到 `config.properties` 文件，更改里面的配置项即可。
+
+* url：地址。默认为：/webhook
+* port：端口。默认为：4567
+* secret：密钥。默认为：123456
+
+## cURL 测试
+
+粘贴下面命令在服务器终端执行，如果返回的字符串`ok`，则说明部署成功
+
+```shell
+curl --location --request POST 'http://localhost:4567/webhook' \
+--header 'X-Hub-Signature: sha1=8cded2cfd0eed0e7a4457602e40d89409f133c47' \
+--header 'X-GitHub-Event: push' \
+--header 'X-GitHub-Delivery: cad15200-e8d0-11ec-8ecf-7ed4a33ce6f1' \
+--header 'X-Hub-Signature-256: sha256=ad434e21f72e63ccc2bb9c411a458824dec8892ff8a823d39b27d0512f107a24' \
+--header 'Content-Type: application/json' \
+--data-raw '123123'
+```
+
+## 开源协议
+
+[MIT License](https://github.com/liaocp66/java-webhook/blob/main/LICENSE)
+
