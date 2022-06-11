@@ -43,7 +43,6 @@ public class WebHookHandler implements HttpHandler {
             }
         } catch (Exception e) {
             LOGGER.warning(e.getLocalizedMessage());
-            handleErrorResponse(exchange, e.getLocalizedMessage());
         }
     }
 
