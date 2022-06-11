@@ -1,5 +1,6 @@
 package cn.liaocp.project.handler;
 
+import cn.liaocp.project.App;
 import cn.liaocp.project.event.PushEvent;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -60,7 +61,7 @@ public class WebHookHandler implements HttpHandler {
             throw new Exception("未找到请求头 X-Hub-Signature-256");
         }
         Mac sha256_HMAC = Mac.getInstance(ALGORITHM);
-        sha256_HMAC.init(new SecretKeySpec("6%M$36XhmA$r".getBytes(), ALGORITHM));
+        sha256_HMAC.init(new SecretKeySpec(App.secret.getBytes(), ALGORITHM));
         byte[] result = sha256_HMAC.doFinal(requestBody.getBytes());
         return githubSignature.equalsIgnoreCase(GITHUB_SIGNATURE_PREFIX + DatatypeConverter.printHexBinary(result));
     }
