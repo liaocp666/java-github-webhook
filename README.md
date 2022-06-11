@@ -38,9 +38,9 @@ JRE：== 8
 ```shell
 curl --location --request POST 'http://localhost:4567/webhook' \
 --header 'X-Hub-Signature: sha1=8cded2cfd0eed0e7a4457602e40d89409f133c47' \
---header 'X-GitHub-Event: push' \
+--header 'X-GitHub-Event: ping' \
 --header 'X-GitHub-Delivery: cad15200-e8d0-11ec-8ecf-7ed4a33ce6f1' \
---header 'X-Hub-Signature-256: sha256=ad434e21f72e63ccc2bb9c411a458824dec8892ff8a823d39b27d0512f107a24' \
+--header 'X-Hub-Signature-256: sha256=cb501e835b2c39ff70b72e399ceaae1ea870ac9dac3218178f6e63722a151c72' \
 --header 'Content-Type: application/json' \
 --data-raw '123123'
 ```
