@@ -2,7 +2,6 @@ package cn.liaocp.project.handler;
 
 import cn.liaocp.project.App;
 import cn.liaocp.project.event.EventFactory;
-import cn.liaocp.project.event.PushEvent;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -30,19 +29,18 @@ public class WebHookHandler implements HttpHandler {
     private static final String HEADER_EVENT_KEY = "X-GitHub-Event";
 
     public void handle(HttpExchange exchange) {
-        if (!exchange.getRequestMethod().equalsIgnoreCase("post")) {
-            handleErrorResponse(exchange, "非POST请求");
-            return;
-        }
         try {
+            if (!exchange.getRequestMethod().equalsIgnoreCase("post")) {
+                throw new RuntimeException("非POST请求");
+            }
             if (verifySignature(exchange)) {
                 handleSuccessResponse(exchange, "ok");
                 handleEvent(exchange);
             } else {
-                handleErrorResponse(exchange, "签名验证失败");
+                throw new RuntimeException("签名验证失败");
             }
         } catch (Exception e) {
-            LOGGER.warning(e.getLocalizedMessage());
+            handleErrorResponse(exchange, "签名验证失败");
         }
     }
 
@@ -56,7 +54,7 @@ public class WebHookHandler implements HttpHandler {
         Headers header = exchange.getRequestHeaders();
         String githubSignature = header.getFirst(HEADER_SIGNATURE_KEY);
         if (githubSignature == null || githubSignature.length() == 0) {
-            throw new Exception("未找到请求头 X-Hub-Signature-256");
+            throw new RuntimeException("未找到请求头 X-Hub-Signature-256");
         }
         Mac sha256_HMAC = Mac.getInstance(ALGORITHM);
         sha256_HMAC.init(new SecretKeySpec(App.secret.getBytes(), ALGORITHM));
